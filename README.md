@@ -6,15 +6,20 @@
 
 欢迎大家修改与使用，求求给个Star吧~🌟
 
-## 安装依赖
+> [!IMPORTANT]
+>
+> 软件直接运行使用
+>
+> 可以点击左侧Release👉进行下载
+
+## 源码环境依赖安装
 
 ```
 pip install -r requments.txt
 ```
 
-## 运行
+## 源码运行
 
 ```
 python ui.py
 ```
-

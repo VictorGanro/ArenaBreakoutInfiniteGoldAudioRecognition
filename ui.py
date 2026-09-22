@@ -42,7 +42,12 @@ from PySide6.QtWidgets import (
 )
 
 # ================= 路径常量 =================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# PyInstaller 打包后，__file__ 指向临时解压目录（_MEIPASS），
+# 需要用 sys.executable 定位 exe 所在目录，确保读取 exe 同级的 VoiceSource。
+if getattr(sys, "frozen", False):
+    BASE_DIR = os.path.dirname(os.path.abspath(sys.executable))
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VOICE_DIR = os.path.join(BASE_DIR, "VoiceSource")
 JSON_PATH = os.path.join(VOICE_DIR, "data.json")
 CONFIG_PATH = os.path.join(BASE_DIR, "config.json")

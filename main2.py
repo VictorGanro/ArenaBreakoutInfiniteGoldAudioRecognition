@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 import warnings
@@ -11,9 +12,16 @@ import soundcard as sc
 warnings.filterwarnings("ignore")
 
 # ================= 1. 全局配置与参数设置 =================
-JSON_PATH = "VoiceSource/data.json"
-VOICE_DIR = "VoiceSource"
-CONFIG_PATH = "config.json"
+# PyInstaller 打包后，__file__ 指向临时解压目录（_MEIPASS），
+# 需用 sys.executable 定位 exe 所在目录，读取 exe 同级的 VoiceSource / config.json。
+if getattr(sys, "frozen", False):
+    BASE_DIR = os.path.dirname(os.path.abspath(sys.executable))
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+JSON_PATH = os.path.join(BASE_DIR, "VoiceSource", "data.json")
+VOICE_DIR = os.path.join(BASE_DIR, "VoiceSource")
+CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 
 # 识别参数的默认值（当 config.json 不存在或字段缺失时使用）
 DEFAULT_CONFIG = {
